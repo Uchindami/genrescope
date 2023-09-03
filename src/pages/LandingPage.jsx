@@ -5,7 +5,7 @@ import {Button} from "@material-tailwind/react";
 
 const LandingPage = () => {
     const clientId = "48afadbf377241ca8ce9e904a37fc73e";
-    const redirectUri = "http://localhost:3000/home";
+    const redirectUri = "https://genrescope.onrender.com/home";
     const scopes = [
         'ugc-image-upload',
         'user-read-playback-state',
