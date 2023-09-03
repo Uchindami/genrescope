@@ -3,7 +3,7 @@ import spotifyService from "../features/spotifyService";
 import chatServices from "../features/GPTchatService"
 import {Typewriter} from 'react-simple-typewriter'
 import {Avatar, Card, CardBody, CardFooter, Chip, Spinner, Typography,} from "@material-tailwind/react";
-import hero from "../images/user.jpg"
+import hero from "../images/user.png"
 
 const Slideshow = () => {
     const [topGenres, setTopGenres] = useState(null);
@@ -47,7 +47,7 @@ const Slideshow = () => {
                 <Card className="m-6 max-w-md grid w-fit justify-items-center">
                     <Avatar
                         alt="avatar"
-                        src={userProfile.data.images[1].url ? userProfile.data.images[1].url : hero}
+                        src={userProfile.data.images[1].url ? userProfile.data.images[1].url : hero }
                         withBorder={true}
                         className="p-0.5"
                         size="xl"
