@@ -5,7 +5,6 @@ const getAccessToken = async (code) => {
     const timeSpan = localStorage.getItem('TOKEN_TIME_SPAN');
 
     if (token && Date.now() - parseInt(timeSpan) < 3600000) {
-        console.log('Using cached token.');
         return token;
     }
 

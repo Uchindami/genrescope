@@ -6,12 +6,10 @@ import {Avatar, Card, CardBody, CardFooter, Chip, Spinner, Typography,} from "@m
 
 
 const Slideshow = () => {
-
     const [topGenres, setTopGenres] = useState(null);
     const [personDescription, setPersonDescription] = useState(null);
     const [userProfile, setUserProfile] = useState(null);
     const code = new URLSearchParams(window.location.search).get("code")
-    console.log(code);
 
     useEffect(() => {
         // Function to get access, user profile, and top genres
@@ -28,6 +26,7 @@ const Slideshow = () => {
                 console.error(error);
             }
         }
+
         getAccessAndData();
     }, []);
 

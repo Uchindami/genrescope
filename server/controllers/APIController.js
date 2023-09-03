@@ -82,7 +82,6 @@ const callback = asyncHandler(async (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
 
-    console.log(code + 'Backend')
 
     try {
         const data = await spotifyApi.authorizationCodeGrant(code);
