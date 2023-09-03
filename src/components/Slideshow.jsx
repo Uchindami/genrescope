@@ -47,7 +47,13 @@ const Slideshow = () => {
                 <Card className="m-6 max-w-md grid w-fit justify-items-center">
                     <Avatar
                         alt="avatar"
-                        src={userProfile.data.images[1].url ? userProfile.data.images[1].url : hero }
+                        src={
+                            userProfile.data.images &&
+                            userProfile.data.images.length > 1 &&
+                            userProfile.data.images[1].url
+                                ? userProfile.data.images[1].url
+                                : hero
+                        }
                         withBorder={true}
                         className="p-0.5"
                         size="xl"
