@@ -3,6 +3,7 @@ import spotifyService from "../features/spotifyService";
 import chatServices from "../features/GPTchatService"
 import {Typewriter} from 'react-simple-typewriter'
 import {Avatar, Card, CardBody, CardFooter, Chip, Spinner, Typography,} from "@material-tailwind/react";
+import ReactGA from "react-ga4";
 
 
 const Slideshow = () => {
@@ -28,6 +29,7 @@ const Slideshow = () => {
                 console.error(error);
             }
         }
+        ReactGA.pageview(window.location.pathname);
         getAccessAndData();
     }, []);
 
