@@ -25,7 +25,7 @@ const scopes = [
 ];
 
 const spotifyApi = new SpotifyWebApi({
-    redirectUri: 'http://localhost:3000/home',
+    redirectUri: process.env.SPOTIFY_REDIRECT,
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
