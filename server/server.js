@@ -1,3 +1,4 @@
+const path = require('path');
 const dotenv = require('dotenv').config();
 const colors = require('colors');
 const express = require('express');
@@ -15,6 +16,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', APIRoutes);
 
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../build')));
+
+    app.get('*', (req, res) =>
+        res.sendFile(
+            path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+        )
+    );
+} else {
+    app.get('/', (req, res) => res.send('Please set to production'));
+}
+
 function startServer() {
 
     app.listen(port, (error) => {
@@ -23,7 +36,7 @@ function startServer() {
         } else {
             console.log(`Server started on port ${port}`.magenta);
             console.log(
-                'HTTP Server up. Now go to http://localhost:8888/login in your browser.'
+                'HTTP Server up. Now go to http://localhost:8888 in your browser.'
             )
         }
     });

@@ -52,7 +52,7 @@ const generateDescription = asyncHandler(async (req, res) => {
                 messages: [
                     {
                         "role": "system",
-                        "content": "Make at least 1 Joke, Include Emojis in every sentence, Tease the Person Once. Dont go above 70 words"
+                        "content": "Make at least 1 Joke. Include Emojis in every sentence. Be Mean. Your answer should be within 80 words"
                     },
                     {
                         "role": "user",
@@ -61,7 +61,7 @@ const generateDescription = asyncHandler(async (req, res) => {
                     },
                     ],
                 temperature: 1,
-                max_tokens: 70,
+                max_tokens: 100,
                 top_p: 1,
                 frequency_penalty: 0,
                 presence_penalty: 0,
