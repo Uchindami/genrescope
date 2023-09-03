@@ -1,7 +1,6 @@
 {
   "name": "genrescope",
   "version": "0.1.0",
-  "proxy": "http://localhost:8888",
   "private": true,
   "dependencies": {
     "@material-tailwind/react": "^2.1.1",
