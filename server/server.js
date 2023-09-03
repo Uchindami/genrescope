@@ -1,5 +1,5 @@
-const path = require('path');
 const dotenv = require('dotenv').config();
+const path = require('path');
 const colors = require('colors');
 const express = require('express');
 const { errorHandler } = require('./middleware/errorMiddleware');
