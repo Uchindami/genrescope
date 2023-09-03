@@ -82,11 +82,7 @@ const callback = asyncHandler(async (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
 
-    if (error) {
-        console.error('Callback Error:', error);
-        /*res.send(`Callback Error: ${error}`);*/
-        return;
-    }
+    console.log(code + 'Backend')
 
     try {
         const data = await spotifyApi.authorizationCodeGrant(code);
@@ -114,7 +110,7 @@ const callback = asyncHandler(async (req, res) => {
                 }, expires_in / 2 * 1000);*/
     } catch (error) {
         console.error('Error getting Tokens:', error);
-        /* res.send(`Error getting Tokens: ${error}`);*/
+        res.send(`Error getting Tokens: ${error}`);
     }
 });
 

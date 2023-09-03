@@ -11,6 +11,7 @@ const Slideshow = () => {
     const [personDescription, setPersonDescription] = useState(null);
     const [userProfile, setUserProfile] = useState(null);
     const code = new URLSearchParams(window.location.search).get("code")
+    console.log(code);
 
     useEffect(() => {
         // Function to get access, user profile, and top genres
