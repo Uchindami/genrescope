@@ -3,7 +3,7 @@ import spotifyService from "../features/spotifyService";
 import chatServices from "../features/GPTchatService"
 import {Typewriter} from 'react-simple-typewriter'
 import {Avatar, Card, CardBody, CardFooter, Chip, Spinner, Typography,} from "@material-tailwind/react";
-import hero from "../../public/hero.jpg"
+import hero from "../images/user.jpg"
 
 const Slideshow = () => {
     const [topGenres, setTopGenres] = useState(null);
