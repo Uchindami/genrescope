@@ -9,7 +9,7 @@ const AppRoutes = () => {
 
     return code ?(
         <Routes>
-            <Route path="/home" element={(<Home code={code}/>)}/>
+            <Route path="/home" element={(<Home />)}/>
         </Routes>
     ) : (
         <Routes>

@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const SpotifyWebApi = require('spotify-web-api-node');
+const OpenAI = require("openai");
 
 const scopes = [
     'ugc-image-upload',
@@ -34,10 +35,52 @@ const loginUser = asyncHandler(async (req, res) => {
     res.redirect(spotifyApi.createAuthorizeURL(scopes));
 });
 
+
+
+const generateDescription = asyncHandler(async (req, res) => {
+
+    const songs = req.query.songs;
+
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+    });
+
+
+        try {
+            const response = await openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: [
+                    {
+                        "role": "system",
+                        "content": "Make at least 1 Joke, Include Emojis in every sentence, Tease the Person Once. Dont go above 70 words"
+                    },
+                    {
+                        "role": "user",
+                        "content": `Describe my personality based on my most listened-to songs, the songs are" +
+                            " in the triple quotes  \"\"\"${songs}\"\"\"`
+                    },
+                    ],
+                temperature: 1,
+                max_tokens: 70,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+            });
+
+            const data = String(response.choices[0].message.content)
+            console.log( data + "\n Success");
+            res.send(data)
+
+        } catch (error) {
+            console.error('Error:', error);
+            res.send(error);
+        }
+});
+
+
 const callback = asyncHandler(async (req, res) => {
     const error = req.query.error;
     const code = req.query.code;
-    const state = req.query.state;
 
     if (error) {
         console.error('Callback Error:', error);
@@ -54,24 +97,24 @@ const callback = asyncHandler(async (req, res) => {
         spotifyApi.setAccessToken(access_token);
         spotifyApi.setRefreshToken(refresh_token);
 
-        /*console.log('access_token:', access_token);
-        console.log('refresh_token:', refresh_token);*/
+        console.log('access_token:', access_token);
+        console.log('refresh_token:', refresh_token);
 
 
         console.log(`Successfully retrieved access token. Expires in ${expires_in} s.`);
         res.send(access_token);
 
-/*        setInterval(async () => {
-            const data = await spotifyApi.refreshAccessToken();
-            const access_token = data.body['access_token'];
+        /*        setInterval(async () => {
+                    const data = await spotifyApi.refreshAccessToken();
+                    const access_token = data.body['access_token'];
 
-            console.log('The access token has been refreshed!');
-            console.log('access_token:', access_token);
-            spotifyApi.setAccessToken(access_token);
-        }, expires_in / 2 * 1000);*/
+                    console.log('The access token has been refreshed!');
+                    console.log('access_token:', access_token);
+                    spotifyApi.setAccessToken(access_token);
+                }, expires_in / 2 * 1000);*/
     } catch (error) {
         console.error('Error getting Tokens:', error);
-       /* res.send(`Error getting Tokens: ${error}`);*/
+        /* res.send(`Error getting Tokens: ${error}`);*/
     }
 });
 
@@ -85,5 +128,6 @@ const getAccessToken = asyncHandler(async (req, res) => {
 module.exports = {
     callback,
     loginUser,
+    generateDescription,
     getAccessToken,
 }
