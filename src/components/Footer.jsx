@@ -14,6 +14,7 @@ export function SimpleFooter() {
                     src={Flag}
                     alt="nature image"
                 />
+
             </Typography>
             <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
                 <li>
