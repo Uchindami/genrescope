@@ -38,7 +38,7 @@ const LandingPage = () => {
 
 
     return (
-        <main className="bg-primary-body h-screen w-full text-headings-mid">
+        <main className="absolute inset-0 bg-primary-body h-screen w-full text-headings-mid">
             <div className="px-4 sm:px-6 flex-col items-center md:px-8">
                 <Nav title={"Genrescope"}/>
                 <Hero/>
@@ -47,8 +47,8 @@ const LandingPage = () => {
                         <a href={AUTH_URL}>Authorize Spotify</a>
                     </Button>
                 </div>
-                <SimpleFooter/>
             </div>
+            <SimpleFooter/>
         </main>
     );
 };

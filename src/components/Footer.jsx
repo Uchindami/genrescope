@@ -2,19 +2,19 @@ import { Typography } from "@material-tailwind/react";
 import Flag from "../images/malawi.png"
 export function SimpleFooter() {
     return (
-        <footer className=" border shadow-2xl flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12
-         py-6 text-center md:justify-between text-headings-mid">
+        <footer className="absolute inset-x-0 bottom-0 py-6 shadow-2xl flex w-full flex-row flex-wrap
+        items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between text-headings-mid">
             <Typography className="font-normal">
                 &copy; 2023 Uchindami
             </Typography>
-            Made With 💙 From
+
             <Typography className="font-normal">
+                Made With 💙 From
                 <img
                     className="h-5 w-5"
                     src={Flag}
                     alt="nature image"
                 />
-
             </Typography>
             <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
                 <li>
@@ -51,7 +51,7 @@ export function SimpleFooter() {
                     <Typography
                         as="a"
                         href="https://uchindami.github.io/"
-                        color="blue-gray"
+                        color="gray"
                         className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
                     >
                         Contact Us
