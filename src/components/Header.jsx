@@ -6,8 +6,6 @@ const Header = ({title}) => {
             <div className="px-4 sm:px-6 md:px-8">
                 <Background/>
                 <Nav title={title}/>
-                <Hero/>
-
             </div>
         </header>
     )
