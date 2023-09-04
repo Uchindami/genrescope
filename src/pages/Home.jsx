@@ -11,7 +11,6 @@ const Home = () => {
             <Header title={"Genrescope"}/>
             <Hero/>
             <Slideshow/>
-            <SimpleFooter/>
         </main>
     );
 };
