@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
 import Flag from "../images/malawi.png"
 export function SimpleFooter() {
     return (
-        <footer className="flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12
+        <footer className=" border shadow-2xl flex w-full flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12
          py-6 text-center md:justify-between text-headings-mid">
             <Typography className="font-normal">
                 &copy; 2023 Uchindami
@@ -10,7 +10,7 @@ export function SimpleFooter() {
             Made With 💙 From
             <Typography className="font-normal">
                 <img
-                    className="p-1"
+                    className="h-5 w-5"
                     src={Flag}
                     alt="nature image"
                 />
@@ -21,7 +21,7 @@ export function SimpleFooter() {
                     <Typography
                         as="a"
                         href="https://uchindami.github.io/"
-                        color="blue-gray"
+                        color="gray"
                         className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
                     >
                             About Us
@@ -31,7 +31,7 @@ export function SimpleFooter() {
                     <Typography
                         as="a"
                         href="#"
-                        color="blue-gray"
+                        color="gray"
                         className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
                     >
                         License
@@ -41,7 +41,7 @@ export function SimpleFooter() {
                     <Typography
                         as="a"
                         href="https://github.com/Uchindami/"
-                        color="blue-gray"
+                        color="gray"
                         className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
                     >
                         Contribute
