@@ -2,6 +2,7 @@ import React from "react";
 import queryString from "query-string";
 import {Hero, Nav} from "../components/Header";
 import {Button} from "@material-tailwind/react";
+import SimpleFooter from "../components/Footer";
 
 const LandingPage = () => {
     const clientId = "48afadbf377241ca8ce9e904a37fc73e";
@@ -46,6 +47,7 @@ const LandingPage = () => {
                         <a href={AUTH_URL}>Authorize Spotify</a>
                     </Button>
                 </div>
+                <SimpleFooter/>
             </div>
         </main>
     );
