@@ -1,65 +1,42 @@
-import { Typography } from "@material-tailwind/react";
-import Flag from "../images/malawi.png"
+import Flag from "../assets/images/malawi.png"
+import React from "react";
+
+
 export function SimpleFooter() {
     return (
-        <footer className="absolute inset-x-0 bottom-0 py-6 shadow-2xl flex w-full flex-row flex-wrap
-        items-center justify-center gap-y-6 gap-x-12 text-center md:justify-between text-headings-mid">
-            <Typography className="font-normal">
-                &copy; 2023 Uchindami
-            </Typography>
-
-            <Typography className="font-normal">
-                Made With 💙 From
+        <footer className="absolute bottom-0 flex w-screen m-1 p-2 items-center pr-1.5 justify-between">
+            <div className="flex justify-around items-center font-colfaxAIRegular">
                 <img
-                    className="h-5 w-5"
                     src={Flag}
-                    alt="nature image"
-                />
-            </Typography>
-            <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
-                <li>
-                    <Typography
-                        as="a"
-                        href="https://uchindami.github.io/"
-                        color="gray"
-                        className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
-                    >
-                            About Us
-                    </Typography>
-                </li>
-                <li>
-                    <Typography
-                        as="a"
-                        href="#"
-                        color="gray"
-                        className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
-                    >
-                        License
-                    </Typography>
-                </li>
-                <li>
-                    <Typography
-                        as="a"
-                        href="https://github.com/Uchindami/"
-                        color="gray"
-                        className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
-                    >
-                        Contribute
-                    </Typography>
-                </li>
-                <li>
-                    <Typography
-                        as="a"
-                        href="https://uchindami.github.io/"
-                        color="gray"
-                        className="font-normal transition-colors hover:text-purple-200 focus:text-deep-purple-700"
-                    >
-                        Contact Us
-                    </Typography>
-                </li>
-            </ul>
+                    className={"m-1"}
+                    alt={"Malawian Flag"}
+                    width={20}
+                    height={20}/>
+                <span>
+        </span>
+            </div>
+            <div className="flex">
+                <a
+                    href="https://uchindami.github.io/"
+                    className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+                >
+                    <span className="">About</span>
+                </a>
+                <a
+                    href="https://twitter.com"
+                    className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+                >
+                    <span className="">Twitter</span>
+                </a>
+                <a
+                    href="https://www.linkedin.com/in/manfred-chirambo/"
+                    className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
+                >
+                    <span className="">LinkedIn</span>
+                </a>
+            </div>
         </footer>
-    );
+    )
 }
 
 export default SimpleFooter

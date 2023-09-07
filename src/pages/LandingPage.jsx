@@ -1,32 +1,18 @@
 import React from "react";
 import queryString from "query-string";
-import {Hero, Nav} from "../components/Header";
+import Header, {Hero} from "../components/Header";
 import {Button} from "@material-tailwind/react";
 import SimpleFooter from "../components/Footer";
 
 const LandingPage = () => {
     const clientId = "48afadbf377241ca8ce9e904a37fc73e";
-    const redirectUri = "https://genrescope.onrender.com/home";
+    const redirectUri= "https://genrescope.onrender.com/home";
     const scopes = [
-        'ugc-image-upload',
-        'user-read-playback-state',
-        'user-modify-playback-state',
-        'user-read-currently-playing',
-        'streaming',
-        'app-remote-control',
         'user-read-email',
         'user-read-private',
-        'playlist-read-collaborative',
-        'playlist-modify-public',
-        'playlist-read-private',
-        'playlist-modify-private',
-        'user-library-modify',
         'user-library-read',
         'user-top-read',
-        'user-read-playback-position',
-        'user-read-recently-played',
         'user-follow-read',
-        'user-follow-modify'
     ];
 
     const AUTH_URL = `https://accounts.spotify.com/authorize?${queryString.stringify({
@@ -38,12 +24,13 @@ const LandingPage = () => {
 
 
     return (
-        <main className="absolute inset-0 bg-primary-body h-screen w-full text-headings-mid">
-            <div className="px-4 sm:px-6 flex-col items-center md:px-8">
-                <Nav title={"Genrescope"}/>
+        <main className="absolute inset-0 bg-primary-body-light min-h-screen w-full font-colfaxAIBold
+         overflow-hidden text-headings-light bg-grid-slate-400/[0.05] ">
+            <div className="flex-col items-center px-1 md:px10 lg:px-10 ">
+                <Header title={"Genrescope"}/>
                 <Hero/>
-                <div className={"pt-5 grid place-content-center"}>
-                    <Button className={"bg-accent self-center"}>
+                <div className={"pt-10 grid place-content-center"}>
+                    <Button className={"bg-accent self-center font-colfaxAIRegular text-white"}>
                         <a href={AUTH_URL}>Authorize Spotify</a>
                     </Button>
                 </div>

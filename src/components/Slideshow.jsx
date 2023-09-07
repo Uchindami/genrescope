@@ -3,7 +3,8 @@ import spotifyService from "../features/spotifyService";
 import chatServices from "../features/GPTchatService"
 import {Typewriter} from 'react-simple-typewriter'
 import {Avatar, Card, CardBody, CardFooter, Chip, Spinner, Typography,} from "@material-tailwind/react";
-import hero from "../images/user.png"
+import hero from "../assets/images/user.png"
+import {sampleDiscription, sampleTopGenres, sampleUserProfile} from "../assets/SampleData/userProfile";
 
 const Slideshow = () => {
     const [topGenres, setTopGenres] = useState(null);
@@ -12,22 +13,28 @@ const Slideshow = () => {
     const code = new URLSearchParams(window.location.search).get("code")
 
     useEffect(() => {
-        // Function to get access, user profile, and top genres
-        const getAccessAndData = async () => {
-            try {
-                const token = await spotifyService.getAccessToken(code);
-                const profile = await spotifyService.getUserProfile(token);
-                setUserProfile(profile);
-                const genre = await spotifyService.getTopGenres(token);
-                setTopGenres(genre)
-                const person = await chatServices.getDescription(token);
-                setPersonDescription(person)
-            } catch (error) {
-                console.error(error);
-            }
-        }
+         //Function to get access, user profile, and top genres
+         const getAccessAndData = async () => {
+             try {
+                 const token = await spotifyService.getAccessToken(code);
+                 const profile = await spotifyService.getUserProfile(token);
+                 setUserProfile(profile);
+                 const genre = await spotifyService.getTopGenres(token);
+                 setTopGenres(genre)
+                 const person = await chatServices.getDescription(token);
+                 setPersonDescription(person)
+             } catch (error) {
+                 console.error(error);
+             }
+         }
 
-        getAccessAndData();
+         getAccessAndData();
+
+/*        Testing Sample Data
+        setUserProfile(sampleUserProfile)
+        setPersonDescription(sampleDiscription)
+        setTopGenres(sampleTopGenres)
+        */
     }, []);
 
     /*  console.log(userProfile)*/
@@ -41,10 +48,11 @@ const Slideshow = () => {
     }
 
     return (
-        <div className={"pt-5 grid justify-items-center content-center grid-cols-1 sm:grid-cols-2 gap-4"}>
+
+        <div className={" sm:flex justify-around md:flex-row py-5 font-colfaxAIRegular"}>
 
             <div>
-                <Card className="m-6 max-w-md grid w-fit justify-items-center">
+                <Card className="m-6 max-w-md grid justify-items-center">
                     <Avatar
                         alt="avatar"
                         src={
@@ -55,7 +63,7 @@ const Slideshow = () => {
                                 : hero
                         }
                         withBorder={true}
-                        className="p-0.5"
+                        className="p-1"
                         size="xl"
                     />
                     <CardBody>
@@ -80,9 +88,9 @@ const Slideshow = () => {
             </div>
 
             <div>
-                <Card className="m-6 max-w-md  grid ">
+                <Card className="m-6 max-w-md  grid">
                     <CardBody>
-                        <Typography variant="h5" color="blue-gray" className="mb-2">
+                        <Typography variant="h5" className="mb-2 text-headings-light">
                             Genre Insight 🔍
                         </Typography>
                         <div className="mt-5 gap-10">

@@ -1,13 +1,12 @@
 import Header, {Hero} from "../components/Header";
 import Slideshow from "../components/Slideshow";
 import React from "react";
-import SimpleFooter from "../components/Footer";
 
 const Home = () => {
 
     return (
-        <main className="place-content-center min-h-screen overflow-hidden bg-grid-slate-400/[0.05] bg-bottom border-b
-        border-slate-100/5 bg-primary-body text-headings-mid">
+        <main className="bg-primary-body-light min-h-screen w-full font-colfaxAIBold
+          text-headings-light bg-grid-slate-400/[0.05] md:px-20 lg:px-20">
             <Header title={"Genrescope"}/>
             <Hero/>
             <Slideshow/>

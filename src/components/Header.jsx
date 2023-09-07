@@ -1,23 +1,28 @@
 import React from 'react'
+import {ReactComponent as Logo} from '../assets/images/genrescope.svg';
+
 
 const Header = ({title}) => {
     return (
         <header className="relative">
-            <div className="px-4 sm:px-6 md:px-8">
-                <Background/>
-                <Nav title={title}/>
-            </div>
+            <Background/>
+            <Nav title={title}/>
         </header>
     )
 }
 
 export const Nav = ({title}) => {
     return (
-        <div className="relative pt-6 lg:pt-8 flex items-center justify-between text-xl text-slate-200">
+        <div className="relative flex items-center pr-1.5 lg:pt-5 justify-between text-xl ">
             <div className="flex items-center">
-                <span>🎵{title} Beta</span>
+                <span>
+                    <Logo width={"70px"} height={"70px"}/>
+                </span>
+                <span>
+                    {title}
+                </span>
             </div>
-            <div className="flex items-center ml-6 pl-6">
+            <div className="flex items-center">
                 <a
                     href="https://github.com/Uchindami"
                     className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
@@ -52,7 +57,7 @@ export const Nav = ({title}) => {
                     </svg>
                 </a>
                 <a
-                    href="https://youtu.be"
+                    href="https://www.linkedin.com/in/manfred-chirambo/"
                     className="ml-6 block text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"
                 >
                     <span className="sr-only">YouTube</span>
@@ -78,17 +83,22 @@ export const Nav = ({title}) => {
 
 export const Hero = () => {
     return (
-        <div className="relative max-w-5xl mx-auto pt-20 sm:pt-24 lg:pt-12">
-            <h1 className="font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-center text-white">
-                🎵 Discover Your Top Genres.
+        <div className="relative pt-20 sm:pt-24 lg:pt-20">
+            <h1 className="font-extrabold px-4 text-4xl sm:text-5xl lg:text-6xl text text-center">
+                let Genrescope{" "}
+                <code className="font-medium ">judge</code>{" "}
+                your music.
             </h1>
-            <p className="mt-6 text-lg  text-center max-w-3xl mx-auto text-slate-400">
-                Delve into a captivating exploration of your most played genres {" "}
-                {/*                <code className="font-mono font-medium text-headings-mid">flex</code>,{" "}
-                <code className="font-mono font-medium text-headings-mid">pt-4</code>,{" "}
-                <code className="font-mono font-medium text-headings-mid">text-center</code>{" "}
-                and{" "}
-                <code className="font-mono font-medium text-sky-400">rotate-90</code>{" "}*/}
+            <p className="mt-6 text-lg pt-5 text-center">
+                <code className="font-medium=">Genrescope blends the genius of{" "}
+                    <code className={"text-headings-sm"}>
+                        OpenAI(chatGPT-3.5)
+                    </code> with you listening data from{" "}
+                    <code className={"text-headings-sm"}>
+                        Spotify
+                    </code>{" "}
+                    to describe your personality. Delve into a captivating exploration of your most played songs
+                </code>
             </p>
         </div>
     )
