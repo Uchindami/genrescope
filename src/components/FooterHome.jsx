@@ -2,9 +2,9 @@ import Flag from "../assets/images/malawi.png";
 import React from "react";
 import { ButtonGroup, Button } from "@material-tailwind/react";
 
-export function SimpleFooter() {
+export function SimpleFooterHome() {
   return (
-    <footer className="relative bottom-0 m-1 flex w-screen p-2 items-center pr-1.5 justify-between z-20">
+    <footer className=" absolute bottom-0 m-1 flex w-screen p-2 items-center pr-1.5 justify-between z-20 ">
       <div className="flex justify-around items-center font-colfaxAIRegular">
         <img
           src={Flag}
@@ -45,5 +45,4 @@ export function SimpleFooter() {
   );
 }
 
-
-export default SimpleFooter;
+export default SimpleFooterHome;

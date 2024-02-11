@@ -13,7 +13,7 @@ const Header = ({title}) => {
 
 export const Nav = ({title}) => {
     return (
-        <div className="relative flex items-center pr-1.5 lg:pt-5 justify-between text-xl ">
+        <div className="relative flex items-center pr-1.5 lg:pt-5 justify-between text-xl z-20 ">
             <div className="flex items-center">
                 <span>
                     <Logo width={"70px"} height={"70px"}/>

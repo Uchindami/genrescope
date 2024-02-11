@@ -1,21 +1,20 @@
-import {Route, Routes} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import React from "react";
-import {Home, LandingPage} from "./pages";
+import { Home, LandingPage, } from "./pages";
 
 
 const AppRoutes = () => {
 
-    const code = new URLSearchParams(window.location.search).get("code")
+    // <Routes>
+    //     <Route path="/home" element={(<Home />)}/>
+    // </Routes>       <Routes>
+    //     <Route path="/" element={(<LandingPage/>)}/>
+    // </Routes>
+    <Routes>
+        <Route path="/" element={(<LandingPage/>)}/>
+        <Route path="/home" element={(<Home />)}/>
+    </Routes>
 
-    return code ?(
-        <Routes>
-            <Route path="/home" element={(<Home />)}/>
-        </Routes>
-    ) : (
-        <Routes>
-            <Route path="/" element={(<LandingPage/>)}/>
-        </Routes>
-    )
 }
 
 export default AppRoutes;

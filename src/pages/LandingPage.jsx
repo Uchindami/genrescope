@@ -2,7 +2,8 @@ import React from "react";
 import queryString from "query-string";
 import Header, {Hero} from "../components/Header";
 import {Button} from "@material-tailwind/react";
-import SimpleFooter from "../components/Footer";
+import SimpleFooterHome from "../components/FooterHome";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
     const clientId = "48afadbf377241ca8ce9e904a37fc73e";
@@ -24,19 +25,22 @@ const LandingPage = () => {
 
 
     return (
-        <main className="absolute inset-0 bg-primary-body-light min-h-screen w-full font-colfaxAIBold
-         overflow-hidden text-headings-light bg-grid-slate-400/[0.05] ">
+        <div className="relative min-h-screen overflow-hidden bg-primary-body-light font-colfaxAIBold text-headings-light bg-grid-slate-400/[0.05]"
+        >
             <div className="flex-col items-center px-1 md:px10 lg:px-10 ">
                 <Header title={"Genrescope"}/>
                 <Hero/>
                 <div className={"pt-10 grid place-content-center"}>
-                    <Button className={"bg-accent self-center font-colfaxAIRegular text-white"}>
-                        <a href={AUTH_URL}>Authorize Spotify</a>
+                    <Button 
+                    variant="gradient" 
+                    size="lg" 
+                    className={"transition bg-accent self-center font-colfaxAIRegular hover:-translate-y-1 hover:scale-110 text-white"}>
+                        <Link to="/relic" className="text-white">Login with Spotify</Link>
                     </Button>
                 </div>
             </div>
-            <SimpleFooter/>
-        </main>
+            <SimpleFooterHome/> 
+        </div>
     );
 };
 
