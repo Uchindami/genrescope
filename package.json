@@ -1,60 +1,43 @@
 {
   "name": "genrescope",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "rsbuild dev",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview",
+    "lint": "bun ultracite check",
+    "lint:fix": "bun ultracite fix",
+    "server": "bun run server/index.ts",
+    "server:dev": "bun --watch run server/index.ts"
+  },
   "dependencies": {
-    "@material-tailwind/react": "^2.1.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.4.0",
-    "colors": "^1.4.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-async-handler": "^1.2.0",
+    "@chakra-ui/react": "^3.30.0",
+    "@emailjs/browser": "^4.1.0",
+    "@emotion/react": "^11.14.0",
     "framer-motion": "^10.16.1",
+    "hono": "^4.7.0",
+    "next-themes": "^0.4.6",
     "openai": "^4.3.1",
-    "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^5.0.1",
-    "@emailjs/browser": "^4.1.0",
-    "react-router-dom": "^6.15.0",
-    "react-scripts": "5.0.1",
-    "react-simple-typewriter": "^5.0.1",
-    "spotify-web-api-node": "^5.0.2",
-    "web-vitals": "^2.1.4"
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.15",
-    "nodemon": "^2.0.20",
-    "postcss": "^8.4.28",
-    "tailwindcss": "^3.3.3"
+    "@biomejs/biome": "2.3.11",
+    "@rsbuild/core": "^1.7.2",
+    "@rsbuild/plugin-react": "^1.4.2",
+    "@types/bun": "^1.2.6",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
+    "ultracite": "7.0.8"
   },
-  "scripts": {
-    "start": "node server/server.js",
-    "dev":"react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

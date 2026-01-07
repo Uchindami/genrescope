@@ -1,0 +1,95 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  Flex,
+  HStack,
+  Link,
+  Menu,
+  Text,
+} from "@chakra-ui/react";
+import { ColorModeButton } from "@/components/ui/color-mode";
+import { useAuth } from "@/context/AuthContext";
+import { useUserData } from "@/hooks/useUserData";
+import Logo from "../assets/images/genrescope.svg";
+
+interface HeaderProps {
+  title?: string;
+}
+
+const Header = ({ title = "Genrescope" }: HeaderProps) => {
+  const { isAuthenticated, logout, login } = useAuth();
+  const { profile, isLoading: profileLoading } = useUserData();
+
+  const userDisplayName = profile?.displayName || "User";
+  const userAvatarUrl = profile?.imageUrl || undefined;
+
+  return (
+    <Box as="header" position="sticky" top="0" w="full" zIndex="100">
+      <Container maxW="736px" px={{ base: 6, md: 0 }} py="3">
+        <Flex align="center" justify="space-between">
+          <Link _hover={{ textDecoration: "none" }} href="/">
+            <HStack gap={{ base: 2, md: 3 }}>
+              <Box
+                alt="Genrescope Logo"
+                as="img"
+                h={{ base: "60px", md: "60px" }}
+                src={Logo}
+                w={{ base: "60px", md: "60px" }}
+              />
+              <Text
+                color="fg"
+                display={{ base: "none", sm: "block" }}
+                fontFamily="heading"
+                fontSize={{ base: "lg", md: "2xl" }}
+                fontWeight="bold"
+                letterSpacing="tight"
+              >
+                {title}
+              </Text>
+            </HStack>
+          </Link>
+
+          <HStack gap={{ base: 2, md: 4 }}>
+            <ColorModeButton color="fg" size={{ base: "xs", md: "md" }} />
+            {isAuthenticated ? (
+              <Menu.Root positioning={{ placement: "bottom-end" }}>
+                <Menu.Trigger asChild>
+                  <Box cursor="pointer">
+                    <Avatar.Root size={{ base: "xs", md: "md" }}>
+                      <Avatar.Fallback name={userDisplayName} />
+                      <Avatar.Image src={userAvatarUrl} />
+                    </Avatar.Root>
+                  </Box>
+                </Menu.Trigger>
+                <Menu.Content minW="180px">
+                  <Box borderBottomWidth="1px" px="4" py="2">
+                    <Text fontSize="xs" fontWeight="bold">
+                      {userDisplayName}
+                    </Text>
+                  </Box>
+                  <Menu.Item color="red.500" onClick={logout} value="logout">
+                    Logout
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Root>
+            ) : (
+              <Button
+                colorPalette="brand"
+                fontWeight="bold"
+                onClick={login}
+                size={{ base: "xs", md: "md" }}
+                variant="subtle"
+              >
+                Sign In
+              </Button>
+            )}
+          </HStack>
+        </Flex>
+      </Container>
+    </Box>
+  );
+};
+
+export default Header;

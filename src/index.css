@@ -1,28 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@font-face {
+  font-family: "ColfaxAIRegular";
+  src: url("../public/ColfaxAIRegular.otf");
+}
 
 @font-face {
-    font-family: "ColfaxAIRegular";
-    src: url("../public/ColfaxAIRegular.otf");
-}
-@font-face {
-    font-family: "ColfaxAIBold";
-    src: url("../public/ColfaxAIBold.otf");
-}
-.bg-grid-slate-400\/\[0\.05\] {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  font-family: "ColfaxAIBold";
+  src: url("../public/ColfaxAIBold.otf");
 }
 
-.bg-grid-slate-100\/\[0\.03\] {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(241 245 249 / 0.03)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+/* Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
-.container {
-    background-color: #f8f9fa;
-    color: #212529;
+/* Background Grids */
+.dashed-grid-paper {
+  --grid-size: 30px;
+  --grid-strength: 1px;
+  --grid-dash: 10px;
+  --grid-gap: 5px;
+  --grid-color: rgba(255, 255, 255, 0.08); /* Light grid for dark base */
+  --paper-color: var(--chakra-colors-bg);
+
+  background-color: var(--paper-color);
+  background-size:
+    var(--grid-dash) var(--grid-dash),
+    var(--grid-size) var(--grid-size);
+  background-image:
+    linear-gradient(
+      to bottom,
+      transparent var(--grid-gap),
+      var(--paper-color) var(--grid-gap)
+    ),
+    linear-gradient(
+      to right,
+      var(--grid-color) var(--grid-strength),
+      transparent var(--grid-strength)
+    ),
+    linear-gradient(
+      to right,
+      transparent var(--grid-gap),
+      var(--paper-color) var(--grid-gap)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--grid-color) var(--grid-strength),
+      transparent var(--grid-strength)
+    );
 }
 
-.rotate-180 {
-    transform: rotate(180deg);
+.dark .dashed-grid-paper,
+._dark .dashed-grid-paper {
+  --grid-color: rgba(0, 0, 0, 0.06); /* Dark grid for light mode */
+  /* --paper-color handles itself via theme variable */
 }
