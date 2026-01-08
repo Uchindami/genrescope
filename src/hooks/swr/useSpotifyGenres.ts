@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { useAuth } from "@/context/AuthContext";
 import type { GenrePercentages } from "@/features/spotifyService";
+import { apiClient } from "@/lib/api/client";
 import { cacheTTL } from "@/lib/swr/config";
 import { swrKeys } from "@/lib/swr/keys";
-import { apiClient } from "@/lib/api/client";
 
 interface UseSpotifyGenresOptions {
   enabled?: boolean;

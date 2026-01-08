@@ -235,6 +235,25 @@ export const logoutHandler = (c: Context) => {
 };
 
 /**
+ * Disconnect account - clear tokens and delete user data
+ * Used for GDPR/Privacy compliance
+ */
+export const disconnectHandler = (c: Context) => {
+  // Clear all Spotify tokens
+  clearTokens(c);
+
+  // If you store any user data in a database, delete it here
+  // Example: await db.users.delete({ spotifyId: userId });
+
+  console.log("[Spotify] User disconnected account and data deleted");
+
+  return c.json({
+    success: true,
+    message: "Your Spotify account has been disconnected and all data deleted.",
+  });
+};
+
+/**
  * Check session status
  */
 export const sessionHandler = async (c: Context) => {

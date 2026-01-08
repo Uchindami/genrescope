@@ -13,7 +13,7 @@ export const GenreAnalysisSkeleton = () => {
         <Heading color="fg" mb="6" size="lg">
           Genre Analysis 🔍
         </Heading>
-        
+
         <Wrap gap="3">
           {/* Show 6 genre tag skeletons */}
           {Array.from({ length: 6 }).map((_, i) => (
@@ -25,7 +25,7 @@ export const GenreAnalysisSkeleton = () => {
             />
           ))}
         </Wrap>
-        
+
         <Box mt="8">
           <Skeleton height="4" width="80%" />
         </Box>

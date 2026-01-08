@@ -14,14 +14,14 @@ export const ProfileCardSkeleton = () => {
         <Flex align="start" direction={{ base: "column", sm: "row" }} gap="6">
           {/* Avatar skeleton */}
           <Skeleton borderRadius="lg" boxSize="32" />
-          
+
           <Box flex="1" w="full">
             {/* Name + Badge skeleton */}
             <Flex align="center" gap="3" wrap="wrap">
               <Skeleton height="8" width="200px" />
               <Skeleton height="6" width="100px" />
             </Flex>
-            
+
             {/* Description skeleton */}
             <Box mt="4">
               <SkeletonText noOfLines={4} />

@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { generateDescriptionHandler } from "../controllers/openai.controller";
 import {
   callbackHandler,
+  disconnectHandler,
   getGenresHandler,
   getProfileHandler,
   getTopArtistsHandler,
@@ -21,6 +22,7 @@ api.get("/login", loginHandler);
 api.get("/callback", callbackHandler);
 api.post("/auth/refresh", refreshHandler);
 api.post("/auth/logout", logoutHandler);
+api.delete("/auth/disconnect", disconnectHandler);
 api.get("/auth/session", sessionHandler);
 
 // ============================================

@@ -5,10 +5,13 @@ import {
   Center,
   Flex,
   Heading,
+  HStack,
+  Image,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import SpotifyIcon from "@/assets/images/Primary_Logo_Green_CMYK.svg";
 import { useAuth } from "@/context/AuthContext";
 import { useMusicAnalysis } from "@/hooks/swr/useMusicAnalysis";
 import MainLayout from "@/layouts/MainLayout";
@@ -109,6 +112,14 @@ export const MusicDNAPage = () => {
               </Alert.Content>
             </Alert.Root>
           )}
+
+          {/* Spotify Attribution */}
+          <HStack gap="2" justify="center" pb="4">
+            <Image alt="Spotify" height="14px" src={SpotifyIcon} />
+            <Text color="fg.muted" fontSize="2xs">
+              Music data provided by Spotify
+            </Text>
+          </HStack>
         </Flex>
 
         <Box pt="4">

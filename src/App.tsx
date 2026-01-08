@@ -16,6 +16,9 @@ const MusicDNAPage = lazy(() =>
 const RelicPage = lazy(() =>
   import("@/features/relic").then((module) => ({ default: module.RelicPage }))
 );
+const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"));
+const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"));
+const AccountSettingsPage = lazy(() => import("@/pages/AccountSettingsPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 
 function App() {
@@ -23,7 +26,7 @@ function App() {
   if (import.meta.env.DEV) {
     useSWRDevTools();
   }
-  
+
   return (
     <Suspense fallback={<div className="min-h-screen bg-blackAlpha.100" />}>
       <Routes>
@@ -44,6 +47,16 @@ function App() {
           }
           path="/relic"
         />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AccountSettingsPage />
+            </ProtectedRoute>
+          }
+          path="/settings"
+        />
+        <Route element={<PrivacyPolicyPage />} path="/privacy" />
+        <Route element={<TermsOfServicePage />} path="/terms" />
         <Route element={<NotFoundPage />} path="*" />
       </Routes>
     </Suspense>

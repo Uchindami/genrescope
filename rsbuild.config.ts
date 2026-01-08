@@ -13,6 +13,7 @@ export default defineConfig({
       ...publicVars,
       "process.env": JSON.stringify(rawPublicVars),
     },
+    assetsInclude: [/\.csv$/],
   },
   resolve: {
     alias: {
@@ -21,6 +22,18 @@ export default defineConfig({
   },
   html: {
     template: "./index.html",
+  },
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            test: /\.csv$/,
+            type: "asset/source",
+          },
+        ],
+      },
+    },
   },
   server: {
     port: 3000,

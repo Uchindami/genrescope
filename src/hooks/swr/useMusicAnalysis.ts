@@ -28,22 +28,29 @@ export function useMusicAnalysis() {
     limit: 30,
   });
 
-
   // Step 3: Format songs for GPT (memoized)
   const formattedSongs = useMemo(() => {
     if (!topTracks.data) {
-      console.log('[useMusicAnalysis] No tracks data yet');
+      console.log("[useMusicAnalysis] No tracks data yet");
       return "";
     }
     const formatted = spotifyService.formatTracksForDescription(topTracks.data);
-    console.log('[useMusicAnalysis] Formatted songs:', formatted.slice(0, 100) + '...');
+    console.log(
+      "[useMusicAnalysis] Formatted songs:",
+      formatted.slice(0, 100) + "..."
+    );
     return formatted;
   }, [topTracks.data]);
 
   // Step 4: Fetch description (enabled when tracks are loaded)
   const descriptionEnabled = !!topTracks.data && !topTracks.error;
-  console.log('[useMusicAnalysis] Description hook enabled:', descriptionEnabled, 'Songs length:', formattedSongs.length);
-  
+  console.log(
+    "[useMusicAnalysis] Description hook enabled:",
+    descriptionEnabled,
+    "Songs length:",
+    formattedSongs.length
+  );
+
   const description = useGPTDescription({
     enabled: descriptionEnabled,
     songs: formattedSongs,

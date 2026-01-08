@@ -7,8 +7,10 @@ import {
   HStack,
   Link,
   Menu,
+  Separator,
   Text,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { useAuth } from "@/context/AuthContext";
 import { useSpotifyProfile } from "@/hooks/swr/useSpotifyProfile";
@@ -31,26 +33,28 @@ const Header = ({ title = "Genrescope" }: HeaderProps) => {
     <Box as="header" position="sticky" top="0" w="full" zIndex="100">
       <Container maxW="736px" px={{ base: 6, md: 0 }} py="3">
         <Flex align="center" justify="space-between">
-          <Link _hover={{ textDecoration: "none" }} href="/">
-            <HStack gap={{ base: 2, md: 3 }}>
-              <Box
-                alt="Genrescope Logo"
-                as="img"
-                h={{ base: "60px", md: "60px" }}
-                src={Logo}
-                w={{ base: "60px", md: "60px" }}
-              />
-              <Text
-                color="fg"
-                display={{ base: "none", sm: "block" }}
-                fontFamily="heading"
-                fontSize={{ base: "lg", md: "2xl" }}
-                fontWeight="bold"
-                letterSpacing="tight"
-              >
-                {title}
-              </Text>
-            </HStack>
+          <Link _hover={{ textDecoration: "none" }} asChild>
+            <RouterLink to="/">
+              <HStack gap={{ base: 2, md: 3 }}>
+                <Box
+                  alt="Genrescope Logo"
+                  as="img"
+                  h={{ base: "60px", md: "60px" }}
+                  src={Logo}
+                  w={{ base: "60px", md: "60px" }}
+                />
+                <Text
+                  color="fg"
+                  display={{ base: "none", sm: "block" }}
+                  fontFamily="heading"
+                  fontSize={{ base: "lg", md: "2xl" }}
+                  fontWeight="bold"
+                  letterSpacing="tight"
+                >
+                  {title}
+                </Text>
+              </HStack>
+            </RouterLink>
           </Link>
 
           <HStack gap={{ base: 2, md: 4 }}>
@@ -71,8 +75,12 @@ const Header = ({ title = "Genrescope" }: HeaderProps) => {
                       {userDisplayName}
                     </Text>
                   </Box>
+                  <Menu.Item asChild value="settings">
+                    <RouterLink to="/settings">Account Settings</RouterLink>
+                  </Menu.Item>
+                  <Separator />
                   <Menu.Item color="red.500" onClick={logout} value="logout">
-                    Logout
+                    Sign Out
                   </Menu.Item>
                 </Menu.Content>
               </Menu.Root>

@@ -1,7 +1,7 @@
 import useSWR from "swr";
+import { apiClient } from "@/lib/api/client";
 import { cacheTTL } from "@/lib/swr/config";
 import { hashSongs, swrKeys } from "@/lib/swr/keys";
-import { apiClient } from "@/lib/api/client";
 
 interface UseGPTDescriptionOptions {
   /**
@@ -20,25 +20,35 @@ export function useGPTDescription(options: UseGPTDescriptionOptions) {
 
   // Generate stable hash for caching
   const songsHash = songs ? hashSongs(songs) : "";
-  
-  console.log('[useGPTDescription] Hook called:', { enabled, songsLength: songs?.length, songsHash });
+
+  console.log("[useGPTDescription] Hook called:", {
+    enabled,
+    songsLength: songs?.length,
+    songsHash,
+  });
 
   return useSWR<string>(
     // Only fetch if enabled and we have songs
     enabled && songs ? swrKeys.gpt.description(songsHash) : null,
     async () => {
       const encoded = encodeURIComponent(songs);
-      console.log('[useGPTDescription] Fetcher executing for:', encoded.slice(0, 50));
-      
+      console.log(
+        "[useGPTDescription] Fetcher executing for:",
+        encoded.slice(0, 50)
+      );
+
       try {
         // Response is { description: string }, extract the description
         const response = await apiClient.request<{ description: string }>({
           endpoint: `/api/generate-description?songs=${encoded}`,
         });
-        console.log('[useGPTDescription] Got description:', response.description.slice(0, 50));
+        console.log(
+          "[useGPTDescription] Got description:",
+          response.description.slice(0, 50)
+        );
         return response.description; // Extract description string
       } catch (error) {
-        console.error('[useGPTDescription] Fetcher error:', error);
+        console.error("[useGPTDescription] Fetcher error:", error);
         throw error;
       }
     },
@@ -66,9 +76,9 @@ export function useGPTDescription(options: UseGPTDescriptionOptions) {
           );
         }
       },
-      
+
       onError: (error) => {
-        console.error('[useGPTDescription] SWR Error:', error);
+        console.error("[useGPTDescription] SWR Error:", error);
       },
     }
   );

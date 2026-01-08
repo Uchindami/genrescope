@@ -37,7 +37,10 @@ export const GenreAnalysis = ({ genres }: GenreAnalysisProps) => {
             </Box>
           ))}
         </Wrap>
-        <Text color="fg.muted" mt="8">
+        <Text color="fg.muted" fontSize="xs" mt="6">
+          Based on your Spotify listening history
+        </Text>
+        <Text color="fg.muted" mt="2">
           Don't argue with the Algorithm, go argue with your ancestors.
         </Text>
       </Card.Body>

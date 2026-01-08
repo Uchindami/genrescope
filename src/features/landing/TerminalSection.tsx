@@ -1,17 +1,18 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { UserProfile } from "@/features/spotifyService";
 
 interface TerminalSectionProps {
-  userDisplayName: string;
+  profile: UserProfile;
 }
 
-export const TerminalSection = ({ userDisplayName }: TerminalSectionProps) => {
+export const TerminalSection = ({ profile }: TerminalSectionProps) => {
   const [text, setText] = useState("");
   const [showOptions, setShowOptions] = useState(false);
   const navigate = useNavigate();
 
-  const fullText = `welcome ${userDisplayName.toLowerCase()}, what would you like to do today?`;
+  const fullText = `welcome ${profile.displayName.toLowerCase()}, what would you like to do today?`;
 
   const options = [
     { label: "1. judge my music taste", path: "/music-dna" },
@@ -20,7 +21,7 @@ export const TerminalSection = ({ userDisplayName }: TerminalSectionProps) => {
   ];
 
   useEffect(() => {
-    setText(""); // Reset text when userDisplayName changes
+    setText(""); // Reset text when profile changes
     setShowOptions(false);
 
     let currentIndex = 0;

@@ -7,6 +7,7 @@ interface MainLayoutProps {
   headerTitle?: string;
   footerVariant?: "fixed" | "static";
   showFooter?: boolean;
+  maxW?: any;
 }
 
 const MainLayout = ({
@@ -14,6 +15,7 @@ const MainLayout = ({
   headerTitle,
   footerVariant = "static",
   showFooter = true,
+  maxW = "736px",
 }: MainLayoutProps) => {
   return (
     <Box
@@ -37,11 +39,7 @@ const MainLayout = ({
       <Header title={headerTitle} />
 
       <Box flex="1" position="relative" zIndex="1">
-        <Container
-          maxW="736px" // User constraint
-          px={{ base: 6, md: 0 }}
-          py={{ base: 8, md: 12 }}
-        >
+        <Container maxW={maxW} px={{ base: 6, md: 0 }} py={{ base: 8, md: 12 }}>
           {children}
         </Container>
       </Box>

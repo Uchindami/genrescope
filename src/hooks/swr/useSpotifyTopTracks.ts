@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { useAuth } from "@/context/AuthContext";
 import type { TopTrack } from "@/features/spotifyService";
+import { apiClient } from "@/lib/api/client";
 import { cacheTTL } from "@/lib/swr/config";
 import { swrKeys } from "@/lib/swr/keys";
-import { apiClient } from "@/lib/api/client";
 
 type TimeRange = "short_term" | "medium_term" | "long_term";
 
