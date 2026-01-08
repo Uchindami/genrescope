@@ -5,7 +5,7 @@ interface ProfileCardProps {
   displayName: string;
   product: string;
   imageUrl?: string;
-  description: string;
+  description?: string;
 }
 
 export const ProfileCard = ({

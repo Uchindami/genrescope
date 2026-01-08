@@ -24,9 +24,7 @@ const Footer = ({ variant = "static" }: FooterProps) => {
         >
           <HStack gap="3">
             <Image alt="Malawian Flag" h="24px" src={Flag} w="24px" />
-            <Box fontSize="xs">
-              Built with fun in Malawi
-            </Box>
+            <Box fontSize="xs">Built with fun in Malawi</Box>
           </HStack>
 
           <HStack gap="6">

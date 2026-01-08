@@ -4,6 +4,7 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "@/components/ui/provider";
 import { AuthProvider } from "@/context/AuthContext";
+import { SWRProvider } from "@/lib/swr/provider";
 import App from "./App";
 
 const rootElement = document.getElementById("root");
@@ -15,11 +16,13 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <Provider>
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
+      <SWRProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </AuthProvider>
+      </SWRProvider>
     </Provider>
   </React.StrictMode>
 );

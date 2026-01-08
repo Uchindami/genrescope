@@ -22,7 +22,7 @@ export const TerminalSection = ({ userDisplayName }: TerminalSectionProps) => {
   useEffect(() => {
     setText(""); // Reset text when userDisplayName changes
     setShowOptions(false);
-    
+
     let currentIndex = 0;
     const interval = setInterval(() => {
       if (currentIndex < fullText.length) {

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { useAuth } from "@/context/AuthContext";
-import { useProfile } from "@/hooks/useProfile";
+import { useSpotifyProfile } from "@/hooks/swr/useSpotifyProfile";
 import Logo from "../assets/images/genrescope.svg";
 
 interface HeaderProps {
@@ -20,7 +20,9 @@ interface HeaderProps {
 
 const Header = ({ title = "Genrescope" }: HeaderProps) => {
   const { isAuthenticated, logout, login } = useAuth();
-  const { profile, isLoading: profileLoading } = useProfile();
+  const { data: profile, isLoading: profileLoading } = useSpotifyProfile({
+    enabled: isAuthenticated,
+  });
 
   const userDisplayName = profile?.displayName || "User";
   const userAvatarUrl = profile?.imageUrl || undefined;

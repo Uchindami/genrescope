@@ -129,7 +129,11 @@ export const loginHandler = async (c: Context) => {
   const redirectUri = process.env.SPOTIFY_REDIRECT_URI;
 
   if (!(clientId && redirectUri)) {
-    return c.json({ error: "Missing Spotify configuration" }, 500);
+    const missing = [];
+    if (!clientId) missing.push("SPOTIFY_CLIENT_ID");
+    if (!redirectUri) missing.push("SPOTIFY_REDIRECT_URI");
+    console.error(`[Spotify] Missing configuration: ${missing.join(", ")}`);
+    return c.json({ error: "Missing Spotify configuration", missing }, 500);
   }
 
   // Generate PKCE verifier and challenge

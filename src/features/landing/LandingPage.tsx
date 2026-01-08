@@ -1,13 +1,18 @@
 import { Box, Button, Center, Flex, Spinner } from "@chakra-ui/react";
 import { useAuth } from "@/context/AuthContext";
-import { useProfile } from "@/hooks/useProfile";
+import { useSpotifyProfile } from "@/hooks/swr/useSpotifyProfile";
 import MainLayout from "@/layouts/MainLayout";
 import { HeroSection } from "./HeroSection";
 import { TerminalSection } from "./TerminalSection";
 
 export const LandingPage = () => {
   const { isAuthenticated, login } = useAuth();
-  const { profile, isLoading: profileLoading } = useProfile();
+
+  // Only fetch profile when authenticated
+  // SWR will cache this for MusicDNAPage
+  const { data: profile, isLoading } = useSpotifyProfile({
+    enabled: isAuthenticated,
+  });
 
   const handleLogin = () => {
     login();
@@ -20,7 +25,7 @@ export const LandingPage = () => {
       {!isAuthenticated && <HeroSection />}
       <Flex align="center" direction="column" justify="center" pt="10" w="full">
         {isAuthenticated ? (
-          profileLoading ? (
+          isLoading ? (
             <Center py="20">
               <Spinner colorPalette="brand" size="xl" />
             </Center>

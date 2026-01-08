@@ -5,18 +5,69 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useReducer,
+  useRef,
 } from "react";
+import { apiClient } from "@/lib/api/client";
 
-interface AuthContextType {
+// ==================== Types ====================
+
+interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   expiresAt: number | null;
+}
+
+type AuthAction =
+  | { type: "AUTH_LOADING" }
+  | {
+      type: "AUTH_SUCCESS";
+      payload: { authenticated: boolean; expiresAt: number | null };
+    }
+  | { type: "AUTH_ERROR" }
+  | { type: "AUTH_LOGOUT" };
+
+interface AuthContextType extends AuthState {
   login: () => void;
   logout: () => Promise<void>;
   refreshSession: () => Promise<boolean>;
   checkSession: () => Promise<boolean>;
 }
+
+// ==================== Reducer ====================
+
+function authReducer(state: AuthState, action: AuthAction): AuthState {
+  switch (action.type) {
+    case "AUTH_LOADING":
+      return { ...state, isLoading: true };
+
+    case "AUTH_SUCCESS":
+      return {
+        isLoading: false,
+        isAuthenticated: action.payload.authenticated,
+        expiresAt: action.payload.expiresAt,
+      };
+
+    case "AUTH_ERROR":
+      return {
+        isLoading: false,
+        isAuthenticated: false,
+        expiresAt: null,
+      };
+
+    case "AUTH_LOGOUT":
+      return {
+        ...state,
+        isAuthenticated: false,
+        expiresAt: null,
+      };
+
+    default:
+      return state;
+  }
+}
+
+// ==================== Context ====================
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -25,106 +76,115 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  const [state, dispatch] = useReducer(authReducer, {
+    isAuthenticated: false,
+    isLoading: true,
+    expiresAt: null,
+  });
+
+  // Refresh promise queue (prevent duplicate refreshes)
+  const refreshPromiseRef = useRef<Promise<boolean> | null>(null);
 
   /**
-   * Check if user has valid session (cookies are HTTP-only, so we ask backend)
+   * Check session - stable reference (no dependencies)
    */
   const checkSession = useCallback(async (): Promise<boolean> => {
+    dispatch({ type: "AUTH_LOADING" });
+
     try {
-      const response = await fetch("/auth/session", {
-        credentials: "include",
+      const response = await apiClient.request<{
+        authenticated: boolean;
+        expiresAt: number;
+      }>({
+        endpoint: "/auth/session",
       });
 
-      if (!response.ok) {
-        setIsAuthenticated(false);
-        setExpiresAt(null);
-        return false;
-      }
+      dispatch({
+        type: "AUTH_SUCCESS",
+        payload: {
+          authenticated: response.authenticated,
+          expiresAt: response.expiresAt,
+        },
+      });
 
-      const data = await response.json();
-      setIsAuthenticated(data.authenticated);
-      setExpiresAt(data.expiresAt || null);
-      return data.authenticated;
+      return response.authenticated;
     } catch (error) {
       console.error("[Auth] Session check failed:", error);
-      setIsAuthenticated(false);
-      setExpiresAt(null);
+      dispatch({ type: "AUTH_ERROR" });
       return false;
     }
-  }, []);
+  }, []); // ✅ No dependencies = stable
 
   /**
-   * Refresh the access token
+   * Refresh token with queue
    */
   const refreshSession = useCallback(async (): Promise<boolean> => {
-    try {
-      const response = await fetch("/auth/refresh", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        setIsAuthenticated(false);
-        setExpiresAt(null);
-        return false;
-      }
-
-      const data = await response.json();
-      setExpiresAt(data.expiresAt);
-      return true;
-    } catch (error) {
-      console.error("[Auth] Refresh failed:", error);
-      setIsAuthenticated(false);
-      return false;
+    // Return existing refresh promise if already in progress
+    if (refreshPromiseRef.current) {
+      return refreshPromiseRef.current;
     }
-  }, []);
+
+    const refreshPromise = (async () => {
+      try {
+        const response = await apiClient.request<{ expiresAt: number }>({
+          endpoint: "/auth/refresh",
+          method: "POST",
+        });
+
+        dispatch({
+          type: "AUTH_SUCCESS",
+          payload: { authenticated: true, expiresAt: response.expiresAt },
+        });
+
+        return true;
+      } catch (error) {
+        console.error("[Auth] Refresh failed:", error);
+        dispatch({ type: "AUTH_ERROR" });
+        return false;
+      } finally {
+        refreshPromiseRef.current = null;
+      }
+    })();
+
+    refreshPromiseRef.current = refreshPromise;
+    return refreshPromise;
+  }, []); // ✅ No dependencies = stable
 
   /**
-   * Redirect to login (backend handles PKCE)
+   * Login - redirect to OAuth
    */
   const login = useCallback(() => {
     window.location.href = "/login";
   }, []);
 
   /**
-   * Logout - clear session cookies
+   * Logout - clear session
    */
   const logout = useCallback(async () => {
     try {
-      await fetch("/auth/logout", {
+      await apiClient.request({
+        endpoint: "/auth/logout",
         method: "POST",
-        credentials: "include",
       });
     } catch (error) {
       console.error("[Auth] Logout error:", error);
     } finally {
-      setIsAuthenticated(false);
-      setExpiresAt(null);
+      dispatch({ type: "AUTH_LOGOUT" });
     }
   }, []);
 
   // Check session on mount
   useEffect(() => {
-    const init = async () => {
-      setIsLoading(true);
-      await checkSession();
-      setIsLoading(false);
-    };
-    init();
-  }, [checkSession]);
+    checkSession();
+  }, []); // ✅ Only run once
 
-  // Set up auto-refresh before token expires
+  // Auto-refresh before token expires
   useEffect(() => {
-    if (!(expiresAt && isAuthenticated)) return;
+    if (!(state.expiresAt && state.isAuthenticated)) return;
 
-    // Refresh 5 minutes before expiry
-    const refreshTime = expiresAt - Date.now() - 5 * 60 * 1000;
+    const refreshTime = state.expiresAt - Date.now() - 5 * 60 * 1000; // 5 min before
 
     if (refreshTime <= 0) {
-      // Token already expired or about to, refresh now
       refreshSession();
       return;
     }
@@ -134,27 +194,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, refreshTime);
 
     return () => clearTimeout(timer);
-  }, [expiresAt, isAuthenticated, refreshSession]);
+  }, [state.expiresAt, state.isAuthenticated, refreshSession]);
 
   const value = useMemo(
     () => ({
-      isAuthenticated,
-      isLoading,
-      expiresAt,
+      ...state,
       login,
       logout,
       refreshSession,
       checkSession,
     }),
-    [
-      isAuthenticated,
-      isLoading,
-      expiresAt,
-      login,
-      logout,
-      refreshSession,
-      checkSession,
-    ]
+    [state, login, logout, refreshSession, checkSession]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

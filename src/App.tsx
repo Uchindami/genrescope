@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useSWRDevTools } from "@/lib/swr/devtools";
 
 const LandingPage = lazy(() =>
   import("@/features/landing").then((module) => ({
@@ -18,6 +19,11 @@ const RelicPage = lazy(() =>
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 
 function App() {
+  // Enable SWR devtools in development
+  if (import.meta.env.DEV) {
+    useSWRDevTools();
+  }
+  
   return (
     <Suspense fallback={<div className="min-h-screen bg-blackAlpha.100" />}>
       <Routes>

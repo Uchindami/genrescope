@@ -7,41 +7,14 @@ interface DescriptionResponse {
 }
 
 // ============================================
-// API Helper
+// GPT Service
 // ============================================
-
-async function apiFetch<T>(endpoint: string): Promise<T> {
-  const response = await fetch(endpoint, {
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    const error = await response
-      .json()
-      .catch(() => ({ error: "Unknown error" }));
-    throw new Error(error.error || `API error: ${response.status}`);
-  }
-
-  return response.json();
-}
-
-// ============================================
-// OpenAI Service
-// ============================================
-
-/**
- * Generate personality description based on songs
- */
-async function getDescription(songs: string): Promise<string> {
-  const encoded = encodeURIComponent(songs);
-  const data = await apiFetch<DescriptionResponse>(
-    `/api/generate-description?songs=${encoded}`
-  );
-  return data.description;
-}
+// Note: Actual fetching is handled by SWR hooks (useGPTDescription)
+// This file kept for type exports only
 
 const gptServices = {
-  getDescription,
+  // No methods needed - SWR hooks handle everything
 };
 
 export default gptServices;
+export type { DescriptionResponse };
