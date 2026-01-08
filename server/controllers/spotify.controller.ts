@@ -186,8 +186,8 @@ export const callbackHandler = async (c: Context) => {
     setTokens(c, tokens);
     console.log("[Spotify] Auth successful, tokens stored");
 
-    // Redirect to home page
-    return c.redirect("/home");
+    // Redirect to landing page (terminal will be shown)
+    return c.redirect("/");
   } catch (err) {
     console.error("[Spotify] Token exchange failed:", err);
     return c.redirect("/?error=token_exchange_failed");

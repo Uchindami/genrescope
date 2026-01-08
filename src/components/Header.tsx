@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { useAuth } from "@/context/AuthContext";
-import { useUserData } from "@/hooks/useUserData";
+import { useProfile } from "@/hooks/useProfile";
 import Logo from "../assets/images/genrescope.svg";
 
 interface HeaderProps {
@@ -20,7 +20,7 @@ interface HeaderProps {
 
 const Header = ({ title = "Genrescope" }: HeaderProps) => {
   const { isAuthenticated, logout, login } = useAuth();
-  const { profile, isLoading: profileLoading } = useUserData();
+  const { profile, isLoading: profileLoading } = useProfile();
 
   const userDisplayName = profile?.displayName || "User";
   const userAvatarUrl = profile?.imageUrl || undefined;

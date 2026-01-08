@@ -2,10 +2,20 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-const LandingPage = lazy(() => import("@/pages/LandingPage"));
-const Home = lazy(() => import("@/pages/Home"));
+const LandingPage = lazy(() =>
+  import("@/features/landing").then((module) => ({
+    default: module.LandingPage,
+  }))
+);
+const MusicDNAPage = lazy(() =>
+  import("@/features/music-dna").then((module) => ({
+    default: module.MusicDNAPage,
+  }))
+);
+const RelicPage = lazy(() =>
+  import("@/features/relic").then((module) => ({ default: module.RelicPage }))
+);
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
-const RelicProject = lazy(() => import("@/pages/RelicProject"));
 
 function App() {
   return (
@@ -15,15 +25,15 @@ function App() {
         <Route
           element={
             <ProtectedRoute>
-              <Home />
+              <MusicDNAPage />
             </ProtectedRoute>
           }
-          path="/home"
+          path="/music-dna"
         />
         <Route
           element={
             <ProtectedRoute>
-              <RelicProject />
+              <RelicPage />
             </ProtectedRoute>
           }
           path="/relic"

@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { errorHandler } from "./middleware/error.middleware";
@@ -24,6 +25,12 @@ app.route("/", api);
 
 // Health check endpoint
 app.get("/health", (c) => c.json({ status: "ok", timestamp: Date.now() }));
+
+// Serve static files from dist
+app.use("/*", serveStatic({ root: "./dist" }));
+
+// SPA fallback
+app.get("*", serveStatic({ path: "./dist/index.html" }));
 
 // Start server
 const port = Number(process.env.PORT) || 5000;

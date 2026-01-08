@@ -5,6 +5,7 @@ import spotifyService, {
   type GenrePercentages,
   type UserProfile,
 } from "@/features/spotifyService";
+import { useProfile } from "./useProfile";
 
 interface UseUserDataReturn {
   profile: UserProfile | null;
@@ -16,15 +17,15 @@ interface UseUserDataReturn {
 }
 
 export function useUserData(): UseUserDataReturn {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const { isAuthenticated } = useAuth();
+  const { profile, isLoading: profileLoading, error: profileError } = useProfile();
   const [genres, setGenres] = useState<GenrePercentages | null>(null);
   const [description, setDescription] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = useCallback(async () => {
-    if (!isAuthenticated) {
+  const fetchAnalysis = useCallback(async () => {
+    if (!isAuthenticated || !profile) {
       setIsLoading(false);
       return;
     }
@@ -33,14 +34,12 @@ export function useUserData(): UseUserDataReturn {
       setIsLoading(true);
       setError(null);
 
-      // Fetch profile and genres in parallel
-      const [profileData, genreData, topTracks] = await Promise.all([
-        spotifyService.getUserProfile(),
+      // Fetch genres and top tracks in parallel
+      const [genreData, topTracks] = await Promise.all([
         spotifyService.getGenres(),
         spotifyService.getTopTracks(),
       ]);
 
-      setProfile(profileData);
       setGenres(genreData);
 
       // Generate description from top tracks
@@ -48,27 +47,27 @@ export function useUserData(): UseUserDataReturn {
       const descriptionData = await gptServices.getDescription(songsString);
       setDescription(descriptionData);
     } catch (err) {
-      console.error("[useUserData] Error fetching data:", err);
+      console.error("[useUserData] Error fetching analysis:", err);
       setError(
-        err instanceof Error ? err.message : "Failed to fetch user data"
+        err instanceof Error ? err.message : "Failed to fetch music analysis"
       );
     } finally {
       setIsLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, profile]);
 
   useEffect(() => {
-    if (!authLoading) {
-      fetchData();
+    if (!profileLoading && profile) {
+      fetchAnalysis();
     }
-  }, [authLoading, fetchData]);
+  }, [profileLoading, profile, fetchAnalysis]);
 
   return {
     profile,
     genres,
     description,
-    isLoading: isLoading || authLoading,
-    error,
-    refetch: fetchData,
+    isLoading: isLoading || profileLoading,
+    error: error || profileError,
+    refetch: fetchAnalysis,
   };
 }

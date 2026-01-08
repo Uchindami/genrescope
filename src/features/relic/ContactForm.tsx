@@ -19,7 +19,7 @@ interface FormData {
   Message: string;
 }
 
-const SendMessage = () => {
+const ContactForm = () => {
   const [sending, setIsSending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -167,4 +167,4 @@ const SendMessage = () => {
   );
 };
 
-export default SendMessage;
+export { ContactForm };

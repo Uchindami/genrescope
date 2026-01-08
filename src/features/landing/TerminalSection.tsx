@@ -20,11 +20,14 @@ export const TerminalSection = ({ userDisplayName }: TerminalSectionProps) => {
   ];
 
   useEffect(() => {
-    let index = 0;
+    setText(""); // Reset text when userDisplayName changes
+    setShowOptions(false);
+    
+    let currentIndex = 0;
     const interval = setInterval(() => {
-      if (index < fullText.length) {
-        setText((prev) => prev + fullText.charAt(index));
-        index++;
+      if (currentIndex < fullText.length) {
+        setText(fullText.substring(0, currentIndex + 1));
+        currentIndex++;
       } else {
         clearInterval(interval);
         setTimeout(() => setShowOptions(true), 500);

@@ -1,13 +1,13 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Spinner } from "@chakra-ui/react";
 import { useAuth } from "@/context/AuthContext";
-import { useUserData } from "@/hooks/useUserData";
+import { useProfile } from "@/hooks/useProfile";
 import MainLayout from "@/layouts/MainLayout";
 import { HeroSection } from "./HeroSection";
 import { TerminalSection } from "./TerminalSection";
 
 export const LandingPage = () => {
   const { isAuthenticated, login } = useAuth();
-  const { profile } = useUserData();
+  const { profile, isLoading: profileLoading } = useProfile();
 
   const handleLogin = () => {
     login();
@@ -17,12 +17,18 @@ export const LandingPage = () => {
 
   return (
     <MainLayout footerVariant="fixed">
-      <HeroSection />
+      {!isAuthenticated && <HeroSection />}
       <Flex align="center" direction="column" justify="center" pt="10" w="full">
         {isAuthenticated ? (
-          <Box maxW="600px" mx="auto" w="full">
-            <TerminalSection userDisplayName={userDisplayName} />
-          </Box>
+          profileLoading ? (
+            <Center py="20">
+              <Spinner colorPalette="brand" size="xl" />
+            </Center>
+          ) : (
+            <Box maxW="600px" mx="auto" w="full">
+              <TerminalSection userDisplayName={userDisplayName} />
+            </Box>
+          )
         ) : (
           <Button
             colorPalette="brand"

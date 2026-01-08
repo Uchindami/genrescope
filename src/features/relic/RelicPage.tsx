@@ -1,9 +1,9 @@
 import { Button, Card, Heading, Text, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import SendMessage from "@/components/SendMessage";
 import MainLayout from "@/layouts/MainLayout";
+import { ContactForm } from "./ContactForm";
 
-const RelicProject = () => {
+export const RelicPage = () => {
   return (
     <MainLayout>
       <Card.Root
@@ -34,7 +34,7 @@ const RelicProject = () => {
               <Text pt="2">Will I?</Text>
               <Text fontWeight="bold">No</Text>
             </VStack>
-            <SendMessage />
+            <ContactForm />
             <Button asChild colorPalette="brand" variant="ghost">
               <Link to="/">← Back to Terminal</Link>
             </Button>
@@ -44,5 +44,3 @@ const RelicProject = () => {
     </MainLayout>
   );
 };
-
-export default RelicProject;
