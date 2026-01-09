@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://genrescope.onrender.com",
+      "https://genrescope.uchindami.xyz",
       "https://genrescope.uchindami.xyz",
     ],
     credentials: true,

@@ -160,7 +160,7 @@ These Terms shall be governed by and construed in accordance with the laws of **
 For questions about these Terms of Service, please contact:
 
 **Developer**: Uchindami Tech Solutions
-**Website**: [https://uchindami.vercel.app/](https://uchindami.vercel.app/)
+**Website**: [https://uchindami.xyz/](https://uchindami.xyz/)
 
 ---
 

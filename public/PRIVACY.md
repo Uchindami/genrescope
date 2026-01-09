@@ -122,7 +122,7 @@ We may update this privacy policy from time to time. Any changes will be posted 
 If you have any questions about this privacy policy or how we handle your data, please contact us:
 
 **Developer**: Uchindami Tech Solutions
-**Website**: [https://uchindami.vercel.app/](https://uchindami.vercel.app/)
+**Website**: [https://uchindami.xyz/](https://uchindami.xyz/)
 
 ---
 

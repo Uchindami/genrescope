@@ -183,7 +183,7 @@ export const LegalDocument = ({ title, content }: LegalDocumentProps) => {
             color="brand.500"
             display="block"
             fontSize="2xs"
-            href="https://uchindami.vercel.app/"
+            href="https://uchindami.xyz/"
             isExternal
             mt="1"
           >
