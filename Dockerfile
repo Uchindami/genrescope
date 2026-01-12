@@ -29,6 +29,9 @@ COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/server ./server
 COPY --from=build /usr/src/app/package.json ./package.json
 
+# Copy shared lib files (poster generation uses src/lib/poster)
+COPY --from=build /usr/src/app/src/lib ./src/lib
+
 # Expose the server port
 EXPOSE 5000/tcp
 

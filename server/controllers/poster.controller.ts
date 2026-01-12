@@ -5,7 +5,7 @@ import {
   DEFAULT_FESTIVAL_DATA,
   type FestivalData,
   generatePoster,
-} from "../../src/lib/poster/generate.tsx";
+} from "../../src/lib/poster/generate";
 import {
   collectSpotifyData,
   generateLineup,
