@@ -1,3 +1,4 @@
+export * from "./BetaRequestForm";
 export * from "./FeaturesBento";
 export * from "./GithubSection";
 export * from "./HowItWorks";

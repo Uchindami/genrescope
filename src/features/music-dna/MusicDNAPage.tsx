@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Image,
+  SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -14,7 +15,9 @@ import { Link } from "react-router-dom";
 import SpotifyIcon from "@/assets/images/Primary_Logo_Green_CMYK.svg";
 import { useAuth } from "@/context/AuthContext";
 import { useMusicAnalysis } from "@/hooks/swr/useMusicAnalysis";
+import { useMusicDNA } from "@/hooks/swr/useMusicDNA";
 import MainLayout from "@/layouts/MainLayout";
+import { DiversityCard } from "./DiversityCard";
 import { GenreAnalysis } from "./GenreAnalysis";
 import { GenreAnalysisSkeleton } from "./GenreAnalysisSkeleton";
 import { ProfileCard } from "./ProfileCard";
@@ -22,15 +25,18 @@ import { ProfileCardSkeleton } from "./ProfileCardSkeleton";
 
 export const MusicDNAPage = () => {
   const { isAuthenticated } = useAuth();
+
+  // Legacy hook for profile and description
+  const { profile, description, profileState, descriptionState, refetchAll } =
+    useMusicAnalysis();
+
+  // New enhanced Music DNA hook
   const {
-    profile,
-    genres,
-    description,
-    profileState,
-    genresState,
-    descriptionState,
-    refetchAll,
-  } = useMusicAnalysis();
+    data: musicDNA,
+    isLoading: dnaLoading,
+    error: dnaError,
+    mutate: refetchDNA,
+  } = useMusicDNA();
 
   if (!isAuthenticated) {
     return (
@@ -84,18 +90,24 @@ export const MusicDNAPage = () => {
             />
           ) : null}
 
-          {/* Genres - Show skeleton while loading */}
-          {genresState.isLoading ? (
+          {/* Music DNA Analysis Grid */}
+          {dnaLoading ? (
             <GenreAnalysisSkeleton />
-          ) : genresState.error ? (
+          ) : dnaError ? (
             <Alert.Root status="warning" variant="subtle">
               <Alert.Indicator />
               <Alert.Content>
-                <Alert.Title>Could not load genre analysis</Alert.Title>
+                <Alert.Title>Could not load analysis</Alert.Title>
               </Alert.Content>
+              <Button onClick={() => refetchDNA()} size="sm" variant="outline">
+                Retry
+              </Button>
             </Alert.Root>
-          ) : genres ? (
-            <GenreAnalysis genres={genres} />
+          ) : musicDNA ? (
+            <SimpleGrid columns={{ base: 1, lg: 2 }} gap="6">
+              <GenreAnalysis analysis={musicDNA.genreAnalysis} />
+              <DiversityCard metrics={musicDNA.diversityMetrics} />
+            </SimpleGrid>
           ) : null}
 
           {/* Description loading indicator */}

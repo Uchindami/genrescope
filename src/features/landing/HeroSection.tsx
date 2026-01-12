@@ -1,4 +1,5 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
+import { BetaRequestForm } from "./components";
 
 export const HeroSection = () => {
   return (
@@ -6,7 +7,7 @@ export const HeroSection = () => {
       <Heading
         as="h1"
         fontSize={{ base: "3xl", md: "5xl" }}
-        fontWeight="bold"
+        fontWeight=""
         letterSpacing="tight"
         lineHeight="1.1"
         textAlign="center"
@@ -15,25 +16,13 @@ export const HeroSection = () => {
         <Text as="span" color="brand.500">
           Genrescope
           <br />
-        </Text>{" "}
-        judge your music history.
+        </Text>
+        judge your music taste.
+        <BetaRequestForm />
+        <Text color="fg.muted" fontSize="sm" mt="6" textAlign="center">
+          Already approved? Log in below.
+        </Text>
       </Heading>
-      <Text
-        color="fg.muted"
-        fontSize={{ base: "sm", md: "lg" }}
-        lineHeight="tall"
-        maxW="600px"
-        mt={{ base: 5, md: 6 }}
-        mx="auto"
-        textAlign="center"
-      >
-        Genrescope analyzes your Spotify data with{" "}
-        <Text as="span" color="red.500" fontWeight="medium">
-          OpenAI (GPT-3.5)
-        </Text>{" "}
-        to build a brutally honest description of your personality. No
-        gatekeeping, just the algorithm being mean.
-      </Text>
     </Box>
   );
 };

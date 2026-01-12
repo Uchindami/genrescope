@@ -1,3 +1,4 @@
+import { Center, Spinner } from "@chakra-ui/react";
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -13,8 +14,10 @@ const MusicDNAPage = lazy(() =>
     default: module.MusicDNAPage,
   }))
 );
-const RelicPage = lazy(() =>
-  import("@/features/relic").then((module) => ({ default: module.RelicPage }))
+const PosterPage = lazy(() =>
+  import("@/features/poster").then((module) => ({
+    default: module.PosterPage,
+  }))
 );
 const PrivacyPolicyPage = lazy(() => import("@/pages/PrivacyPolicyPage"));
 const TermsOfServicePage = lazy(() => import("@/pages/TermsOfServicePage"));
@@ -24,11 +27,18 @@ const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 function App() {
   // Enable SWR devtools in development
   if (import.meta.env.DEV) {
+    // biome-ignore lint/correctness/useHookAtTopLevel: devtools
     useSWRDevTools();
   }
 
   return (
-    <Suspense fallback={<div className="min-h-screen bg-blackAlpha.100" />}>
+    <Suspense
+      fallback={
+        <Center bg="bg" minH="100vh">
+          <Spinner color="brand.500" size="xl" />
+        </Center>
+      }
+    >
       <Routes>
         <Route element={<LandingPage />} path="/" />
         <Route
@@ -42,10 +52,10 @@ function App() {
         <Route
           element={
             <ProtectedRoute>
-              <RelicPage />
+              <PosterPage />
             </ProtectedRoute>
           }
-          path="/relic"
+          path="/poster"
         />
         <Route
           element={

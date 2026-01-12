@@ -41,6 +41,12 @@ export const swrKeys = {
     description: (songsHash: string) =>
       [...swrKeys.gpt.all(), "description", songsHash] as const,
   },
+
+  // ==================== Music DNA ====================
+  musicDna: {
+    all: () => ["musicDna"] as const,
+    analysis: () => [...swrKeys.musicDna.all(), "analysis"] as const,
+  },
 } as const;
 
 /**

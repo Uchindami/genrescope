@@ -144,6 +144,7 @@ export const SPOTIFY_SCOPES = [
   "user-library-read",
   "user-top-read",
   "user-follow-read",
+  "user-read-recently-played",
 ] as const;
 
 // ============================================

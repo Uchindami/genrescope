@@ -16,8 +16,7 @@ export const TerminalSection = ({ profile }: TerminalSectionProps) => {
 
   const options = [
     { label: "1. judge my music taste", path: "/music-dna" },
-    { label: "2. create music graph", path: "/relic" },
-    { label: "3. create fest post", path: "/music-dna" }, // Placeholder for now
+    { label: "2. create social weekend poster", path: "/poster" },
   ];
 
   useEffect(() => {

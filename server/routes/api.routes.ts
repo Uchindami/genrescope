@@ -1,5 +1,7 @@
 import { Hono } from "hono";
+import { getMusicDNAHandler } from "../controllers/musicdna.controller";
 import { generateDescriptionHandler } from "../controllers/openai.controller";
+import { generatePosterHandler } from "../controllers/poster.controller";
 import {
   callbackHandler,
   disconnectHandler,
@@ -34,8 +36,14 @@ api.get("/api/spotify/top-artists", getTopArtistsHandler);
 api.get("/api/spotify/genres", getGenresHandler);
 
 // ============================================
-// OpenAI Routes
+// Music DNA Analysis Routes
 // ============================================
+api.get("/api/music-dna", getMusicDNAHandler);
 api.get("/api/generate-description", generateDescriptionHandler);
+
+// ============================================
+// Poster Generation Routes
+// ============================================
+api.post("/api/poster/generate", generatePosterHandler);
 
 export default api;

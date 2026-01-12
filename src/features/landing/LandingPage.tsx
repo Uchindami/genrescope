@@ -26,20 +26,26 @@ export const LandingPage = () => {
       <VStack gap="16" w="full">
         {!isAuthenticated && (
           <>
-            <HeroSection />
-            <Center py={{ base: "8", md: "12" }}>
-              <Button
-                _hover={{ transform: "scale(1.05)" }}
-                colorPalette="brand"
-                onClick={login}
-                size="lg"
-                transition="transform 0.2s"
-                variant="solid"
-              >
-                Login with
-                <Image alt="Spotify" height="24px" mr="3" src={SpotifyLogo} />
-              </Button>
-            </Center>
+            <Flex
+              direction="column"
+              justify="center"
+              minH={{ base: "calc(100vh - 140px)", md: "calc(100vh - 180px)" }}
+            >
+              <HeroSection />
+              <Center py={{ base: "8", md: "12" }}>
+                <Button
+                  _hover={{ transform: "scale(1.05)" }}
+                  colorPalette="brand"
+                  onClick={login}
+                  size="lg"
+                  transition="transform 0.2s"
+                  variant="solid"
+                >
+                  Login with
+                  <Image alt="Spotify" height="24px" mr="3" src={SpotifyLogo} />
+                </Button>
+              </Center>
+            </Flex>
             <TrustSection />
             <FeaturesBento />
             <GithubSection />
@@ -53,7 +59,8 @@ export const LandingPage = () => {
             align="center"
             direction="column"
             justify="center"
-            pt="10"
+            minH={{ base: "calc(100vh - 140px)", md: "calc(100vh - 180px)" }}
+            pt="0"
             w="full"
           >
             {isLoading ? (

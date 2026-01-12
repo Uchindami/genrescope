@@ -30,7 +30,14 @@ const Header = ({ title = "Genrescope" }: HeaderProps) => {
   const userAvatarUrl = profile?.imageUrl || undefined;
 
   return (
-    <Box as="header" position="sticky" top="0" w="full" zIndex="100">
+    <Box
+      as="header"
+      backdropFilter="blur(5px)"
+      position="sticky"
+      top="0"
+      w="full"
+      zIndex="100"
+    >
       <Container maxW="736px" px={{ base: 6, md: 0 }} py="3">
         <Flex align="center" justify="space-between">
           <Link _hover={{ textDecoration: "none" }} asChild>
