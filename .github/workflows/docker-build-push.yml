@@ -44,3 +44,6 @@ jobs:
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
+                  build-args: |
+                      PUBLIC_SUPABASE_URL=${{ secrets.GENRESCOPE_PUBLIC_SUPABASE_URL }}
+                      PUBLIC_SUPABASE_PUBLISHABLE_KEY=${{ secrets.GENRESCOPE_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
