@@ -8,74 +8,37 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { toaster } from "@/components/ui/toaster";
-import { supabase } from "@/lib/supabase";
+import { useBetaRequest } from "../hooks/useBetaRequest";
 
 export const BetaRequestForm = () => {
   const [email, setEmail] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { isLoading, isSuccess, error, submitRequest } = useBetaRequest();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!email.trim()) {
-      toaster.error({
-        title: "Email required",
-        description: "Please enter your email address.",
-      });
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toaster.error({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const { error } = await supabase
-        .from("beta_requests")
-        .insert({ email: email.trim().toLowerCase() });
-
-      if (error) {
-        // Handle duplicate email error
-        if (error.code === "23505") {
-          toaster.info({
-            title: "Already on the list!",
-            description: "This email has already requested access.",
-          });
-          setIsSubmitted(true);
-          return;
-        }
-        throw error;
-      }
-
-      setIsSubmitted(true);
-      toaster.success({
-        title: "Request submitted!",
-        description: "We'll notify you when your access is approved.",
-      });
-    } catch (err) {
-      console.error("Beta request error:", err);
-      toaster.error({
-        title: "Something went wrong",
-        description: "Please try again later.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    await submitRequest(email);
   };
 
-  if (isSubmitted) {
+  // Effect for handling toast notifications based on hook state
+  if (error) {
+    // We clear the error in the UI immediately after showing toast
+    // This is a simplified approach; ideally transient errors shouldn't break render flow
+    // But for this simple form, just showing the toast is fine.
+    // However, since `error` is state, this would re-render.
+    // Better pattern: Let the hook handle state or just show error inline.
+    // For now, let's just use the toaster inside the handler or show inline error.
+    // Actually, looking at the previous code, toaster was used.
+    // Let's adopt a pattern where we show the error below the input or via toaster in the submit handler?
+    // The hook manages state. Let's just use the state to drive the UI.
+  }
+
+  // Refined approach: Trigger toasters on state change or just render UI states
+  // We'll trust the hook's state for rendering the success view.
+
+  if (isSuccess) {
     return (
       <Box
+        animation="fade-in 0.5s"
         bg="bg.subtle"
         borderRadius="xl"
         maxW="md"
@@ -127,6 +90,7 @@ export const BetaRequestForm = () => {
               boxShadow: "0 0 0 1px var(--chakra-colors-brand-500)",
             }}
             bg="bg.DEFAULT"
+            borderColor={error ? "red.500" : undefined}
             disabled={isLoading}
             flex="1"
             onChange={(e) => setEmail(e.target.value)}
@@ -146,9 +110,17 @@ export const BetaRequestForm = () => {
           </Button>
         </Flex>
 
-        <Text color="fg.subtle" fontSize="xs" textAlign="center">
-          We'll only use your email to notify you about access approval.
-        </Text>
+        {error && (
+          <Text color="red.500" fontSize="xs" fontWeight="medium">
+            {error}
+          </Text>
+        )}
+
+        {!error && (
+          <Text color="fg.subtle" fontSize="xs" textAlign="center">
+            We'll only use your email to notify you about access approval.
+          </Text>
+        )}
       </VStack>
     </Box>
   );
